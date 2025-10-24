@@ -1,6 +1,6 @@
 The Matlab function 'tsa' allows to compute the phase-average of a signal with varying cycles length.
 
-As a avid user of this Matlab function, I was frustrated not to find an equivalent with Python.
+As an avid user of this Matlab function, I was frustrated not to find an equivalent with Python.
 
 ## Algorithms
 Time-domain method (pyTSA_TimeDomain function):
@@ -19,3 +19,4 @@ Frequency-domain method (py_TSA_fft function):
 Bechhoefer, Eric, and Michael Kingsley. "A Review of Time-Synchronous Average Algorithms." Proceedings of the Annual Conference of the Prognostics and Health Management Society, San Diego, CA, September-October, 2009.
 
 ## David Raus
+
