@@ -1,33 +1,53 @@
-# =============================================================================
-# Functions to compute the time-synchronous average of a signal with varying cycle length
-#
-# Two methods are tested:
-# - Time-domain method (function pyTSA_TimeDomain)
-# - Frequency-domain method (function pyTSA_fft)
-#
-# by David Raus
-# 21/11/02
-# =============================================================================
+"""
+Functions to compute the time-synchronous average of a signal with varying cycle length
 
+Two methods are tested:
+- Time-domain method (function pyTSA_TimeDomain)
+- Frequency-domain method (function pyTSA_fft)
+
+D-Raus
+11/02/21
+"""
 
 import numpy as np
 import scipy
 
 
-# Time-domain TSA
-def pyTSA_TimeDomain(y,t,nPulse,fs):
-    
+
+def pyTSA_TimeDomain(y,t,ind_pulse,fs):
+    """
+    Computation of the phase-average of a signal in the time domain
+
+    Parameters
+    ----------
+    y : array of floats
+        signal to be phase-averaged.
+    t : array of floats
+        time vector.
+    ind_pulse : array of int
+        indexes of the beginning of the cycles .
+    fs : float
+        sampling frequency of y.
+
+    Returns
+    -------
+    y_TSA_TimeDomain : array of floats
+        phase-average of y.
+    t_interp : array of floats
+        time vector of the phase-average.
+
+    """
     # Length of the signal for the interpolation
-    N = max(np.diff(nPulse/fs))*fs
+    N = max(np.diff(ind_pulse/fs))*fs
     
     y_TSA_TimeDomain = np.zeros((1,round(N)))
     PP = 0
 
-    for pp in np.arange(len(nPulse)-1):
+    for pp in np.arange(len(ind_pulse)-1):
         
         # Interpolates the signal onto grids of equally spaced samples corresponding to the different cycles.
-        t_interp = np.linspace(t[nPulse[pp]],t[nPulse[pp+1]],round(N))
-        y_rs = scipy.interpolate.pchip_interpolate(t[nPulse[pp]:nPulse[pp+1]],y[nPulse[pp]:nPulse[pp+1]],t_interp, der=0, axis=0)
+        t_interp = np.linspace(t[ind_pulse[pp]],t[ind_pulse[pp+1]],round(N))
+        y_rs = scipy.interpolate.pchip_interpolate(t[ind_pulse[pp]:ind_pulse[pp+1]],y[ind_pulse[pp]:ind_pulse[pp+1]],t_interp, der=0, axis=0)
         
         # Concatenates the resampled signal segments
         y_TSA_TimeDomain = y_TSA_TimeDomain + y_rs
@@ -40,18 +60,37 @@ def pyTSA_TimeDomain(y,t,nPulse,fs):
 
 
 
-# Frequency-domain TSA
-def pyTSA_fft(y,nPulse,fs):    
+def pyTSA_fft(y,ind_pulse,fs):    
+    """
+    Computation of the phase-average of a signal in the frequency domain
+
+    Parameters
+    ----------
+    y : array of floats
+        signal to be phase-averaged.
+        
+    ind_pulse : array of int
+        indexes of the beginning of the cycles .
+    fs : float
+        sampling frequency of y.
+
+    Returns
+    -------
+    y_TSA_fft : array of floats
+        phase-average of y.
+    t_TSA_fft : array of floats
+        time vector of the phase-average.
+    """
     
-    nF = np.min(np.diff(nPulse))-1
-    Y_TSA_fft_tmp = np.zeros((len(nPulse),nF),dtype=complex)
+    nF = np.min(np.diff(ind_pulse))-1
+    Y_TSA_fft_tmp = np.zeros((len(ind_pulse),nF),dtype=complex)
     
     PP = 0
     
-    for pp in np.arange(len(nPulse)-1):
+    for pp in np.arange(len(ind_pulse)-1):
         
         # Breaks the signal into segments corresponding to the different cycles.
-        signal_crop = y[nPulse[pp]:nPulse[pp+1]]
+        signal_crop = y[ind_pulse[pp]:ind_pulse[pp+1]]
         
         # Computes the discrete Fourier transform of each segment.
         spec = np.fft.fft(signal_crop)/len(signal_crop)
@@ -70,4 +109,5 @@ def pyTSA_fft(y,nPulse,fs):
     y_TSA_fft = np.real(np.fft.ifft(fd));
     t_TSA_fft = np.arange(0,len(y_TSA_fft)/fs,1/fs)
     
+
     return y_TSA_fft,t_TSA_fft
