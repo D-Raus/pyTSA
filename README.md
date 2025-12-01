@@ -17,7 +17,7 @@ Frequency-domain method (py_TSA_fft function):
 
 ## Example
 The code 'pyTSA_example.py' presents an example of use of the TSA algorithms for the computation of the time-synchronous average of the position of a fan blade as it slows down after switchoff.
-This example is inspired by the Matlab example presented in the 'tsa' function help page 
+This example is inspired by the Matlab example presented in the 'tsa' function help page. 
 
 The scipy.signal 'find_peaks' is first used to detect the beginning of each cycle:
 <img width="997" height="413" alt="blade position" src="https://github.com/user-attachments/assets/45aeaef1-fe9a-45fe-b799-277c7fe6a856" />
@@ -30,6 +30,7 @@ The pyTSA module is then tested to compute the phase-averaged position of the th
 
 ## Reference
 Bechhoefer, Eric, and Michael Kingsley. "A Review of Time-Synchronous Average Algorithms." Proceedings of the Annual Conference of the Prognostics and Health Management Society, San Diego, CA, September-October, 2009.
+
 
 
 
