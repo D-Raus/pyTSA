@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 import scipy as sp
 
 ### Load pyTSA module
-import pyTSA_functions as pyTSA
+import pyTSA
 
 
 
@@ -73,6 +73,7 @@ if __name__ == '__main__':
     main()
     
     
+
 
 
 
