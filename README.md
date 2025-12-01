@@ -5,7 +5,7 @@ As an avid user of this Matlab function, I was frustrated not to find an equival
 ## Algorithms
 Time-domain method (pyTSA_TimeDomain function):
 1. Divide the signal into segments corresponding to the different cycles
-2. Interpolate the signals in each segment on the same number of sample
+2. Interpolate the signals in each segment on the same number of samples
 3. Compute the average of all the resampled segments
 
 Frequency-domain method (py_TSA_fft function):
@@ -30,6 +30,7 @@ The pyTSA module is then tested to compute the phase-averaged position of the th
 
 ## Reference
 Bechhoefer, Eric, and Michael Kingsley. "A Review of Time-Synchronous Average Algorithms." Proceedings of the Annual Conference of the Prognostics and Health Management Society, San Diego, CA, September-October, 2009.
+
 
 
 
